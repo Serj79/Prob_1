@@ -33,7 +33,149 @@ const Curs = observer(() => {
   const handlePrint = () => {
     window.print();
   };
+ 
+ // пример поиска по матрице
+  const matrtest = [
+    [1, 4, 7, 11, 15, 17],
+    [2, 5, 8, 12, 19, 22],
+    [3, 6, 9, 16, 22, 24],
+    [10, 13, 14, 17, 24, 27],
+    [18, 21, 23, 26, 30, 36],
+  ];
+  const k = Number (temp);
+  const matrObh = () => {
+    const m = matrtest.length; //  кол строк
+    const n = matrtest[0].length; //кол столюцов
+    let i = 0;
+    let j = n - 1;
+    console.log("--**-*-*", k, m, n);
 
+    while (i < m && j > 0) {
+      console.log("&&&&&&&", k, i, j);
+      if (matrtest[i][j] === k) {
+        alert("Нашлось - " + "ячейка -" + (i+1) + "-" + (j+1));
+        return;
+      }
+
+      if (matrtest[i][j] > k) {
+        // т.к. матрица упорядочена по возрастанию и проход начинается с правого верхнего угла
+        j = j - 1; // сдвинем на стобец влево
+      } else {
+        i = i + 1; // сдвинем на строку вниз
+      }
+    }
+    alert("Ничего не нашлось");
+  };
+  const JsonTree={
+    "id": 1,
+    "value": 5,
+    "left": {
+      "id": 2,
+      "value": 3,
+      "left": {
+        "id": 4,
+        "value": 7
+      },
+      "right": {
+        "id": 5,
+        "value": 1
+      }
+    },
+    "right": {
+      "id": 3,
+      "value": 8,
+      "left": {
+        "id": 6,
+        "value": 2
+      },
+      "right": {
+        "id": 7,
+        "value": 4,
+        "left": {
+          "id": 8,
+          "value": 6
+        },
+        "right": {
+          "id": 9,
+          "value": 9
+        }
+      }
+    }
+  }
+  // пример обхода дерева и выбор оптимальной суммы
+
+  const JsonTree2=
+    [
+      {
+        "id": 1,
+        "value": 5,
+        "childrenLeft": 2,
+        "childrenRight": 3
+      },
+      {
+        "id": 2,
+        "value": 3,
+        "childrenLeft": 4,
+        "childrenRight": 5
+      },
+      {
+        "id": 3,
+        "value": 8,
+        "childrenLeft": 6,
+        "childrenRight": 7
+      },
+      {
+        "id": 4,
+        "value": 7,
+        "childrenLeft": null,
+        "childrenRight": null
+      },
+      {
+        "id": 5,
+        "value": 1,
+        "childrenLeft": null,
+        "childrenRight": null
+      }, 
+       {
+        "id": 6,
+        "value": 2,
+        "childrenLeft": 8,
+        "childrenRight": 9
+      },
+      {
+        "id": 7,
+        "value": 4,
+        "childrenLeft": 9,
+        "childrenRight": null
+      },
+      {
+        "id": 8,
+        "value": 6,
+        "childrenLeft": null,
+        "childrenRight": null
+      },
+      {
+        "id": 9,
+        "value": 9,
+        "childrenLeft": 10,
+        "childrenRight": null
+      },
+      {
+        "id": 10,
+        "value": 2,
+        "childrenLeft": null,
+        "childrenRight": null
+      }
+    ]
+    
+const treeNode=(noderoot)=>{
+  if (noderoot.childrenLeft===null && noderoot.childrenRight ===null){
+    return 0
+  }
+  const maxLeftPath = treeNode(noderoot.childrenLeft)
+  const maxRightPath = treeNode(noderoot.childrenRight)
+  return Math.max(maxLeftPath,maxRightPath)+noderoot.value
+}
   useEffect(() => {
     fetchIndication().then((data) => {
       console.log("xxxxx", data);
@@ -80,7 +222,7 @@ const Curs = observer(() => {
         // здесь можно добавить код для обработки каждой строки
       });
       cursIn.reverse();
-      // заполнение дельт 
+      // заполнение дельт
       let delt4 = [];
       for (let i = 1; i < 4; i++) {
         // выведет 0, затем 1, затем 2
@@ -131,22 +273,22 @@ const Curs = observer(() => {
           const dopustOtkl1 = 0.4; // допуск отклонений
           if (
             Math.abs(dSvech1 - delt4[0][0]) < dopustOtkl1 &&
-             Math.abs(dOtkrMax1 - delt4[0][1]) < dopustOtkl1 &&
+            Math.abs(dOtkrMax1 - delt4[0][1]) < dopustOtkl1 &&
             // Math.abs(dZakMax1 - delt4[0][2]) < dopustOtkl1 &&
-            // Math.abs(dMinMax1 - delt4[0][3]) < dopustOtkl1 
+            // Math.abs(dMinMax1 - delt4[0][3]) < dopustOtkl1
 
             Math.abs(dSvech2 - delt4[1][0]) < dopustOtkl1 &&
-             Math.abs(dOtkrMax2 - delt4[1][1]) < dopustOtkl1 
+            Math.abs(dOtkrMax2 - delt4[1][1]) < dopustOtkl1
             // Math.abs(dZakMax2 - delt4[1][2]) < dopustOtkl1 &&
-            // Math.abs(dMinMax2 - delt4[1][3]) < dopustOtkl1 
+            // Math.abs(dMinMax2 - delt4[1][3]) < dopustOtkl1
 
-            //  Math.abs(dSvech3 - delt4[2][0]) < dopustOtkl1 
+            //  Math.abs(dSvech3 - delt4[2][0]) < dopustOtkl1
             // Math.abs(dOtkrMax3 - delt4[2][1]) < dopustOtkl1 &&
             // Math.abs(dZakMax3 - delt4[2][2]) < dopustOtkl1 &&
             // Math.abs(dMinMax3 - delt4[2][3]) < dopustOtkl1
           ) {
-            item[8]=item[8].slice(0, -1)
-            item.push( Number(cursIn[index -1][5]-Number(item[5]) ))// вычислим разность значений между HIGH текущего дня и следующего!!!!!
+            item[8] = item[8].slice(0, -1);
+            item.push(Number(cursIn[index - 1][5] - Number(item[5]))); // вычислим разность значений между HIGH текущего дня и следующего!!!!!
             Itogi.push(item);
             final = final + 1;
           }
@@ -260,9 +402,36 @@ const Curs = observer(() => {
           </Button>
         </Row>
       </Card>
+      <div>
+      <table>
+        <thead>
+          <tr>
+            {matrtest[0].map((item, index) => {
+              return <th>{item}</th>;
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {matrtest.slice(1, matrtest.length).map((item, index) => {
+            return (
+              <tr>
+                <td>{item[0]}</td>
+                <td>{item[1]}</td>
+                <td>{item[2]}</td>
+                <td>{item[3]}</td>
+                <td>{item[4]}</td>
+                <td>{item[5]}</td>
+
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
       <button onClick={handleSave}>Сохранить</button>
       <button onClick={handlePrint}>Распечатать</button>
-
+      <button className='mr-5' onClick={matrObh}>Анализ матрицы</button>
+      <button className='mr-5' onClick={treeNode(JsonTree2.filter(item => item.id === 1))}>Анализ дерева</button>
       <DataTable
         columns={columns}
         data={info}
