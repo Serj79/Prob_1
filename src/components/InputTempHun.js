@@ -6,6 +6,7 @@ import DataTable from "react-data-table-component";
 import { createIndication, fetchIndication } from "../http/tempAPI";
 //  import { SHOP_ROUTE } from "../utils/constants";
 import { observer } from "mobx-react-lite";
+import QrReader from "react-qr-reader";
 
 import moment from "moment";
 

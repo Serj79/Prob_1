@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Nav, Navbar, Container,  Button } from "react-bootstrap";
 import { Context } from "../index";
-import { SHOP_ROUTE, ADMIN_ROUTE, LOGIN_ROUTE,INDICATION_ROUTE,CURS_ROUTE } from "../utils/constants";
+import { SHOP_ROUTE, ADMIN_ROUTE, LOGIN_ROUTE,INDICATION_ROUTE,CURS_ROUTE,QRCODE_ROUTE } from "../utils/constants";
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
 import {NavLink} from "react-router-dom";
@@ -25,6 +25,9 @@ const NavBar = observer(() => {
         </NavLink>
         <NavLink style={{ color: "white" }} to={CURS_ROUTE}>
           Курс
+        </NavLink>
+        <NavLink style={{ color: "white" }} to={QRCODE_ROUTE}>
+          Qr-cod
         </NavLink>
         {user.isAuth ? (
           <Nav className="ml-auto" style={{ color: "white" }}>
