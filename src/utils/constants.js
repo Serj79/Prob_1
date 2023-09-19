@@ -8,3 +8,5 @@ export const DEVICE_ROUTE = '/device'
 export const INDICATION_ROUTE = '/indication'
 export const CURS_ROUTE = '/curs'
 export const QRCODE_ROUTE = '/qrcode'
+export const FR_ROUTE = '/finereader'
+

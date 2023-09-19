@@ -15,12 +15,52 @@ class QrCode extends Component {
     };
     this.handleScan = this.handleScan.bind(this);
     this.qrGenerate = this.qrGenerate.bind(this);
+    this.Uroki = this.Uroki.bind(this);
+
   }
   qrGenerate(data) {
     this.setState({
       view1: true,
     });
   }
+  Uroki() {
+    var num = 8;
+    var arr = [1, 6, 5, 2, 7, 5, 1, 4, 3, 9, 8, 11, 10, 18];
+
+    function findCouple(array, number) {
+      var result = [];
+      var obj = {};
+      //удаляем повторения из массива
+      for (var i = 0; i < array.length; i++) {
+        var str = array[i];
+       
+        obj[str] = true;
+      }
+      
+      array = Object.keys(obj);
+      console.error(array);
+      // ищем уникальные значения
+      var x = null,
+        y = null;
+      array.forEach(function (i, value) {
+        if (number - value < number) {
+          x = number - value;
+
+          array.forEach(function (j, value2) {
+            if (x == value2 && j > i) {
+              y = value;
+
+              result.push("Ваша пара чисел: " + y + " + " + x);
+            }
+          });
+        }
+      });
+      return result;
+    }
+
+    document.writeln(findCouple(arr, num));
+  }
+
   handleScan(data) {
     // console.log(data)
     // const history = useRoutes();
@@ -89,8 +129,24 @@ class QrCode extends Component {
               Отобразить QrCode
             </Button>
           </Row>
-          {view1 ? <QRCodeSVG className="d-flex justify-content-center mt-5 mr-5" value={qrGenVal} /> : ""}
+          {view1 ? (
+            <QRCodeSVG
+              className="d-flex justify-content-center mt-5 mr-5"
+              value={qrGenVal}
+            />
+          ) : (
+            ""
+          )}
         </Card>
+       
+            <Button
+              variant={"outline-success"}
+              className="mt-3 align-content-end"
+              onClick={this.Uroki}
+            >
+              Уроки
+            </Button>
+        
       </div>
     );
   }
